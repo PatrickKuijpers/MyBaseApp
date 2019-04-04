@@ -36,15 +36,14 @@ proguard/
 # Android Studio captures folder
 captures/
 
-# IntelliJ
+# IntelliJ (.idea does not follow default Android .gitignore)
 *.iml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/gradle.xml
-.idea/assetWizardSettings.xml
-.idea/dictionaries
-.idea/libraries
-.idea/caches
+.idea/*
+projectFilesBackup/.idea
+# Intellij .idea folder exceptions:
+!.idea/fileTemplates/
+!.idea/codeStyleSettings.xml
+!.idea/codeStyles
 
 # Keystore files
 *.jks
