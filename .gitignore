@@ -1,3 +1,7 @@
+# Android gitignore. Reference:
+# https://github.com/github/gitignore/blob/master/Android.gitignore
+# ---
+
 # Built application files
 *.apk
 *.ap_
@@ -43,8 +47,8 @@ captures/
 .idea/caches
 
 # Keystore files
-# Uncomment the following line if you do not want to check your keystore files in.
-#*.jks
+*.jks
+# *.keystore # not "debug.keystore"
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
@@ -63,3 +67,12 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
+
+# Mac
+.DS_Store
+
+
+
+# ---
+# git rm --cached -r .
+# Removes all cached files to ensure there are no .gitignore files being tracked
