@@ -9,13 +9,38 @@ android {
         minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    flavorDimensions "branding"
+    productFlavors {
+        first {
+            applicationIdSuffix ".first"
+            dimension "branding"
+        }
+        second {
+            applicationIdSuffix ".second"
+            dimension "branding"
+        }
+    }
+
     buildTypes {
         release {
-            minifyEnabled false
+            // https://developer.android.com/studio/build/shrink-code.html
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        demo {
+            initWith release
+            applicationIdSuffix ".demo "
+            versionNameSuffix "-demo"
+        }
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix ".develop"
+
         }
     }
 }
