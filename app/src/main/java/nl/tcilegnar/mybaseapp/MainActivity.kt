@@ -10,6 +10,7 @@ import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import nl.tcilegnar.mybaseapp.util.Network
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -19,8 +20,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            val currentWifiName = Network().currentWifiNetworkName
+            val hasConnection = Network().hasConnection()
+            Snackbar.make(
+                view, "Current network: $currentWifiName. Connection: $hasConnection", Snackbar.LENGTH_LONG
+            ).setAction("Action", null).show()
         }
 
         val toggle = ActionBarDrawerToggle(
