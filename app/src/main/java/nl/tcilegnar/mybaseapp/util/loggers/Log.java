@@ -13,7 +13,6 @@ public class Log {
     private static final String BASE_LOGTAG = "Tcilegnar_BaseApp";
     private static final String CAT_FILTER_DIVIDER = "_";
     private static final String SPACE = " ";
-    private static final boolean SHOULD_LOG = new MyBuildConfig().isDevelop();
 
     /**
      * The type (/ category) can be used as tag, or supplemented to a tag. With this additional info logs can be easily
@@ -23,12 +22,16 @@ public class Log {
         TEST, API, STORAGE, NOTIFICATION, NAVIGATION, PERMISSIONS
     }
 
+    public static boolean shouldLog() {
+        return new MyBuildConfig().isDevelop();
+    }
+
     public static void v(Object someClass, String msg, Cat... categories) {
         v(getClassName(someClass), msg, categories);
     }
 
     public static void v(String logTag, String msg, Cat... categories) {
-        if (SHOULD_LOG) {
+        if (shouldLog()) {
             android.util.Log.v(BASE_LOGTAG, getMessage(msg, logTag, categories));
         }
     }
@@ -38,7 +41,7 @@ public class Log {
     }
 
     public static void d(String logTag, String msg, Cat... categories) {
-        if (SHOULD_LOG) {
+        if (shouldLog()) {
             android.util.Log.d(BASE_LOGTAG, getMessage(msg, logTag, categories));
         }
     }
@@ -48,7 +51,7 @@ public class Log {
     }
 
     public static void i(String logTag, String msg, Cat... categories) {
-        if (SHOULD_LOG) {
+        if (shouldLog()) {
             android.util.Log.i(BASE_LOGTAG, getMessage(msg, logTag, categories));
         }
     }
@@ -58,7 +61,7 @@ public class Log {
     }
 
     public static void w(String logTag, String msg, Cat... categories) {
-        if (SHOULD_LOG) {
+        if (shouldLog()) {
             android.util.Log.w(BASE_LOGTAG, getMessage(msg, logTag, categories));
         }
     }
@@ -68,7 +71,7 @@ public class Log {
     }
 
     public static void e(String logTag, String msg, Cat... categories) {
-        if (SHOULD_LOG) {
+        if (shouldLog()) {
             android.util.Log.e(BASE_LOGTAG, getMessage(msg, logTag, categories));
         }
     }
@@ -78,7 +81,7 @@ public class Log {
     }
 
     public static void wtf(String logTag, String msg, Cat... categories) {
-        if (SHOULD_LOG) {
+        if (shouldLog()) {
             android.util.Log.wtf(BASE_LOGTAG, getMessage(msg, logTag, categories));
         }
     }

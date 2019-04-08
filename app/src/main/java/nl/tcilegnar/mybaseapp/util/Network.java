@@ -10,6 +10,7 @@ import java.lang.reflect.Method;
 
 import nl.tcilegnar.mybaseapp.App;
 import nl.tcilegnar.mybaseapp.R;
+import nl.tcilegnar.mybaseapp.util.loggers.ExceptionHandler;
 import nl.tcilegnar.mybaseapp.util.loggers.Log;
 
 import static nl.tcilegnar.mybaseapp.util.loggers.Log.Cat.PERMISSIONS;
@@ -18,6 +19,7 @@ import static nl.tcilegnar.mybaseapp.util.loggers.Log.Cat.PERMISSIONS;
 @SuppressWarnings("unused")
 public class Network {
     private static final String TAG = Log.getTag(Network.class.getSimpleName());
+    private static final ExceptionHandler EXCEPTION_HANDLER = new ExceptionHandler(TAG);
     private static final int RETRY_TOTAL_TIME = 5000;
     private static final int RETRY_INTERVAL = 250;
 
@@ -59,7 +61,6 @@ public class Network {
 
     private boolean hasConnectionWithRetry() {
         // Retry is only useful when either wifi or mobile data is enabled
-        // TODO (PK): is this also the case for invalid network error messages onResume?
         if (!isWifiEnabled() && !isMobileDataEnabled()) {
             return false;
         }
@@ -77,8 +78,7 @@ public class Network {
             }
         }
         catch (InterruptedException e) {
-            e.printStackTrace();
-            // TODO:           new ExceptionHandler(TAG).printStackTrace(e);
+            EXCEPTION_HANDLER.printStackTrace(e);
         }
         return hasConnection;
     }
@@ -137,9 +137,7 @@ public class Network {
             return wifiManager != null ? wifiManager.getConnectionInfo().getSSID() : Res.getString(R.string.unknown);
         }
         catch (SecurityException e) {
-            Log.w(TAG, "Could not retrieve WiFi network name: probably the permission was not granted", PERMISSIONS);
-            e.printStackTrace();
-            // TODO:           new ExceptionHandler(TAG).printStackTrace(e);
+            EXCEPTION_HANDLER.printStackTrace(e, PERMISSIONS);
             return Res.getString(R.string.unknown);
         }
     }
