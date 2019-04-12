@@ -4,28 +4,23 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import nl.tcilegnar.mybaseapp.models.PermissionInfo
 import nl.tcilegnar.mybaseapp.util.Network
+import nl.tcilegnar.mybaseapp.util.PermissionRequester
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { view ->
-            val currentWifiName = Network().currentWifiNetworkName
-            val hasConnection = Network().hasConnection()
-            Snackbar.make(
-                view, "Current network: $currentWifiName. Connection: $hasConnection", Snackbar.LENGTH_LONG
-            ).setAction("Action", null).show()
-        }
+        initFabClick()
 
         val toggle = ActionBarDrawerToggle(
             this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
@@ -34,6 +29,34 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
+    }
+
+    private fun initFabClick() {
+        fab.setOnClickListener { view ->
+            PermissionRequester().requestPermissionsAndCallbackIfAllGranted(
+                this, object : PermissionRequester.PermissionRequestListener {
+                    override fun allPermissionsGranted() {
+                        val currentWifiName = Network().currentWifiNetworkName
+                        val hasConnection = Network().hasConnection()
+                        Snackbar.make(
+                            view, "Current network: $currentWifiName. Connection: $hasConnection", Snackbar.LENGTH_LONG
+                        ).setAction("Action", null).show()
+                    }
+
+                    override fun notAllPermissionsGranted() {
+                        Snackbar.make(
+                            view, "notAllPermissionsGranted", Snackbar.LENGTH_LONG
+                        ).setAction("Action", null).show()
+                    }
+
+                    override fun anyPermissionDeniedAndDoNotAskAgain() {
+                        Snackbar.make(
+                            view, "anyPermissionDeniedAndDoNotAskAgain", Snackbar.LENGTH_LONG
+                        ).setAction("Action", null).show()
+                    }
+                }, PermissionInfo.WRITE_EXTERNAL_STORAGE
+            )
+        }
     }
 
     override fun onBackPressed() {
