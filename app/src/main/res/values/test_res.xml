@@ -1,0 +1,15 @@
+<resources>
+    <string name="test_string">TEST</string>
+    <string name="test_string_format">TEST %s TEST</string>
+    <integer name="test_int">123</integer>
+    <bool name="test_bool">true</bool>
+    <dimen name="test_dimen">123dp</dimen>
+    <color name="test_color">#123456</color>
+    <item name="test_drawable" type="drawable">@android:drawable/ic_menu_send</item>
+    <item name="test_vector_drawable" type="drawable">test_vector_drawable</item>
+    <array name="test_array">
+        <item>a</item>
+        <item>b</item>
+        <item>c</item>
+    </array>
+</resources>
