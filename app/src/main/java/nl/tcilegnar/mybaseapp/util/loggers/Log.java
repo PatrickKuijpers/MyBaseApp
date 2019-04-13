@@ -19,7 +19,7 @@ public class Log {
      * filtered (eg. a filter for "_TEST_")
      */
     public enum Cat {
-        TEST, API, STORAGE, NOTIFICATION, NAVIGATION, PERMISSIONS
+        TEST, API, STORAGE, NOTIFICATION, NAVIGATION, PERMISSIONS, TIMER
     }
 
     public static boolean shouldLog() {
